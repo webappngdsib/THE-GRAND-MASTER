@@ -14,12 +14,18 @@ repository: **Settings → Pages → Deploy from a branch → `main` → `/(root
 
 ## Τοπική προβολή
 
-Άνοιξε το `index.html` σε browser ή δημοσίευσε το repository ως στατικό site
-ως στατικό site. Δεν απαιτούνται build steps ή dependencies.
+Άνοιξε το `index.html` σε browser ή δημοσίευσε το repository ως στατικό site. Δεν απαιτούνται build steps ή dependencies.
 
 ## Ενημέρωση εργαλείων
 
-Οι σύνδεσμοι και οι περιγραφές βρίσκονται στις κάρτες του `index.html` και
-ομαδοποιούνται στις ενότητες Craft, Beyond the Craft και General. Για νέα κάρτα,
-πρόσθεσε το `data-category` με τιμή `craft` ή `beyond` και το αντίστοιχο
-`data-search` για την αναζήτηση.
+Όλα τα έργα βρίσκονται στον πίνακα `WORKS` μέσα στο `index.html`. Για νέο έργο
+πρόσθεσε μία γραμμή, π.χ.:
+
+```js
+{ g:"craft", t:"Τίτλος", d:"Περιγραφή.", repo:"webappngdsib/ONOMA-REPO", u:"2026-11-16" }
+```
+
+- `g`: ενότητα (`craft`, `beyond`, `web`, `tools`)
+- `repo`: το αποθετήριο στο GitHub (κουμπί «Κώδικας»)
+- `live`: προαιρετικός ζωντανός σύνδεσμος· αν λείπει, χρησιμοποιείται το GitHub Pages του repo
+- `u`: ημερομηνία τελευταίας ενημέρωσης
