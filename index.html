@@ -1,756 +1,452 @@
 <!doctype html>
 <html lang="el">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta
-      name="description"
-      content="Κεντρικό portal με βοηθητικά εργαλεία και εφαρμογές για τον Μέγα Διδάσκαλο."
-    >
-    <meta name="theme-color" content="#111a24">
-    <title>Grand Master's Portal</title>
-    <style>
-      :root {
-        color-scheme: dark;
-        --ink: #f2efe7;
-        --muted: #a9b0b4;
-        --gold: #d7b875;
-        --gold-light: #ead8aa;
-        --navy: #111a24;
-        --surface: #192530;
-        --surface-raised: #202e39;
-        --line: rgb(234 216 170 / 15%);
-        --serif: Georgia, "Times New Roman", serif;
-        --sans: "Segoe UI", Arial, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 6rem;
-      }
-
-      body {
-        min-width: 320px;
-        margin: 0;
-        background:
-          radial-gradient(ellipse at 50% -18%, rgb(215 184 117 / 12%), transparent 47rem),
-          var(--navy);
-        color: var(--ink);
-        font-family: var(--sans);
-        line-height: 1.6;
-      }
-
-      a {
-        color: inherit;
-      }
-
-      .site-header {
-        position: sticky;
-        z-index: 2;
-        top: 0;
-        border-bottom: 1px solid var(--line);
-        background: rgb(17 26 36 / 92%);
-        backdrop-filter: blur(16px);
-      }
-
-      .header-inner,
-      main,
-      .footer-inner {
-        width: min(1120px, calc(100% - 3rem));
-        margin-inline: auto;
-      }
-
-      .header-inner {
-        display: flex;
-        min-height: 76px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        text-decoration: none;
-      }
-
-      .brand-mark {
-        display: grid;
-        width: 39px;
-        aspect-ratio: 1;
-        place-items: center;
-        border: 1px solid rgb(215 184 117 / 52%);
-        border-radius: 50%;
-        color: var(--gold);
-        font-family: var(--serif);
-        font-size: 1.25rem;
-      }
-
-      .brand-name {
-        font-family: var(--serif);
-        font-size: 1.02rem;
-        letter-spacing: 0.035em;
-      }
-
-      .brand-caption {
-        display: block;
-        color: var(--muted);
-        font-size: 0.63rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-      }
-
-      .main-nav {
-        display: flex;
-        align-items: center;
-        gap: clamp(1rem, 3vw, 2.4rem);
-      }
-
-      .main-nav a {
-        color: #d6d8d6;
-        font-size: 0.84rem;
-        text-decoration: none;
-        transition: color 160ms ease;
-      }
-
-      .main-nav a:hover,
-      .main-nav a:focus-visible {
-        color: var(--gold-light);
-      }
-
-      main {
-        padding-block: 4.5rem 5rem;
-      }
-
-      .hero {
-        max-width: 760px;
-        margin: 0 auto 4rem;
-        text-align: center;
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.65rem;
-        color: var(--gold);
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-      }
-
-      .eyebrow::before,
-      .eyebrow::after {
-        width: 28px;
-        height: 1px;
-        background: rgb(215 184 117 / 55%);
-        content: "";
-      }
-
-      h1,
-      h2,
-      h3,
-      p {
-        margin-top: 0;
-      }
-
-      h1 {
-        margin: 1rem 0 0.85rem;
-        font-family: var(--serif);
-        font-size: clamp(2.6rem, 7vw, 4.6rem);
-        font-weight: 400;
-        letter-spacing: -0.035em;
-        line-height: 1.08;
-      }
-
-      h1 span {
-        color: var(--gold-light);
-      }
-
-      .hero-copy {
-        max-width: 570px;
-        margin: 0 auto;
-        color: #b8c0c3;
-        font-size: 1rem;
-      }
-
-      .toolbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 2.8rem;
-        padding: 1rem 0;
-        border-top: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
-      }
-
-      .tool-count {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.83rem;
-      }
-
-      .tool-count strong {
-        color: var(--gold-light);
-        font-weight: 600;
-      }
-
-      .search {
-        display: flex;
-        width: min(300px, 52%);
-        align-items: center;
-        gap: 0.6rem;
-        padding: 0.65rem 0.85rem;
-        border: 1px solid rgb(234 216 170 / 19%);
-        border-radius: 4px;
-        background: rgb(25 37 48 / 80%);
-        color: var(--muted);
-      }
-
-      .search:focus-within {
-        border-color: var(--gold);
-        outline: 2px solid rgb(215 184 117 / 18%);
-      }
-
-      .search svg {
-        flex: 0 0 auto;
-      }
-
-      .search input {
-        width: 100%;
-        border: 0;
-        outline: 0;
-        background: transparent;
-        color: var(--ink);
-        font: inherit;
-        font-size: 0.82rem;
-      }
-
-      .search input::placeholder {
-        color: #899499;
-      }
-
-      .category {
-        margin-top: 3.8rem;
-        scroll-margin-top: 6rem;
-      }
-
-      .category-heading {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 1.35rem;
-      }
-
-      .category-title {
-        display: flex;
-        align-items: center;
-        gap: 0.85rem;
-        margin: 0;
-        font-family: var(--serif);
-        font-size: clamp(1.7rem, 4vw, 2.15rem);
-        font-weight: 400;
-      }
-
-      .category-title::before {
-        width: 3px;
-        height: 1.6rem;
-        background: var(--gold);
-        content: "";
-      }
-
-      .category-description {
-        margin: 0.25rem 0 0 1.15rem;
-        color: var(--muted);
-        font-size: 0.83rem;
-      }
-
-      .category-count {
-        color: var(--muted);
-        font-size: 0.74rem;
-        white-space: nowrap;
-      }
-
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .tool-card {
-        display: flex;
-        min-height: 190px;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.35rem;
-        border: 1px solid var(--line);
-        border-radius: 5px;
-        background: linear-gradient(145deg, rgb(32 46 57 / 94%), rgb(25 37 48 / 94%));
-        text-decoration: none;
-        transition:
-          border-color 180ms ease,
-          transform 180ms ease,
-          background-color 180ms ease;
-      }
-
-      .tool-card:hover,
-      .tool-card:focus-visible {
-        transform: translateY(-3px);
-        border-color: rgb(215 184 117 / 60%);
-        outline: 0;
-        background: var(--surface-raised);
-      }
-
-      .card-topline {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1.15rem;
-      }
-
-      .card-icon {
-        display: grid;
-        width: 37px;
-        height: 37px;
-        place-items: center;
-        border: 1px solid rgb(215 184 117 / 27%);
-        border-radius: 4px;
-        color: var(--gold);
-      }
-
-      .card-icon svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      .external-icon {
-        color: #909b9f;
-        transition: color 180ms ease, transform 180ms ease;
-      }
-
-      .tool-card:hover .external-icon,
-      .tool-card:focus-visible .external-icon {
-        transform: translate(2px, -2px);
-        color: var(--gold-light);
-      }
-
-      .tool-card h3 {
-        margin-bottom: 0.42rem;
-        font-family: var(--serif);
-        font-size: 1.15rem;
-        font-weight: 400;
-      }
-
-      .tool-card p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 0.82rem;
-        line-height: 1.55;
-      }
-
-      .empty-state {
-        margin: 0;
-        padding: 1.2rem 1.3rem;
-        border: 1px dashed rgb(234 216 170 / 22%);
-        border-radius: 4px;
-        color: var(--muted);
-        font-size: 0.86rem;
-      }
-
-      .empty-state[hidden],
-      .tool-card[hidden],
-      .category[hidden] {
-        display: none;
-      }
-
-      .site-footer {
-        border-top: 1px solid var(--line);
-      }
-
-      .footer-inner {
-        display: flex;
-        min-height: 78px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        color: var(--muted);
-        font-size: 0.75rem;
-      }
-
-      .footer-inner p {
-        margin: 0;
-      }
-
-      .footer-brand {
-        color: var(--gold-light);
-        font-family: var(--serif);
-        letter-spacing: 0.04em;
-      }
-
-      @media (max-width: 760px) {
-        .card-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 560px) {
-        .header-inner,
-        main,
-        .footer-inner {
-          width: min(100% - 2rem, 1120px);
-        }
-
-        .header-inner {
-          min-height: 68px;
-          flex-wrap: wrap;
-          gap: 0.55rem 1rem;
-          padding-block: 0.75rem;
-        }
-
-        .brand-name {
-          font-size: 0.92rem;
-        }
-
-        .main-nav {
-          width: 100%;
-          justify-content: space-between;
-          gap: 0.5rem;
-        }
-
-        .main-nav a {
-          font-size: 0.76rem;
-        }
-
-        main {
-          padding-top: 3.4rem;
-        }
-
-        .hero {
-          margin-bottom: 3rem;
-        }
-
-        .toolbar {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-
-        .search {
-          width: 100%;
-        }
-
-        .card-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .tool-card {
-          min-height: 165px;
-        }
-
-        .footer-inner {
-          align-items: flex-start;
-          flex-direction: column;
-          justify-content: center;
-          padding-block: 1.1rem;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          scroll-behavior: auto !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="brand" href="#top" aria-label="Grand Master's Portal, αρχική σελίδα">
-          <span class="brand-mark" aria-hidden="true">G</span>
-          <span class="brand-name">
-            Grand Master's Portal
-            <span class="brand-caption">Κεντρική πύλη εργαλείων</span>
-          </span>
-        </a>
-        <nav class="main-nav" aria-label="Κεντρικό μενού">
-          <a href="#craft">Craft</a>
-          <a href="#beyond-the-craft">Beyond the Craft</a>
-          <a href="#general">General</a>
-        </nav>
-      </div>
-    </header>
-
-    <main id="top">
-      <section class="hero" aria-labelledby="page-title">
-        <span class="eyebrow">Εργαλεία &amp; βοηθήματα</span>
-        <h1 id="page-title">Grand Master's <span>Portal</span></h1>
-        <p class="hero-copy">
-          Ένα κεντρικό σημείο πρόσβασης στις εφαρμογές και τα βοηθητικά εργαλεία
-          του Μεγάλου Διδασκάλου.
-        </p>
-      </section>
-
-      <div class="toolbar">
-        <p class="tool-count" aria-live="polite">
-          <strong id="visible-count">7</strong> διαθέσιμα εργαλεία
-        </p>
-        <label class="search">
-          <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-            <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/>
-            <path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-          </svg>
-          <input id="tool-search" type="search" placeholder="Αναζήτηση εργαλείων..." autocomplete="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--ARTIFACT-START-->
+<title>Grand Master's Portal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Κεντρικό αποθετήριο με όλες τις εφαρμογές, ιστοσελίδες και εργαλεία.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: sticky masthead → compact hero with ledger stats → filter rail → catalogue grid, grouped by order */
+  :root {
+    --bg: #0f1720;
+    --bg-2: #141e29;
+    --surface: #18242f;
+    --surface-2: #1f2d3a;
+    --ink: #f1ede3;
+    --muted: #a3acb2;
+    --faint: #6f7b83;
+    --gold: #d4b46e;
+    --gold-strong: #e8d3a0;
+    --gold-ink: #121a22;
+    --line: rgb(232 211 160 / 14%);
+    --line-strong: rgb(232 211 160 / 32%);
+    --shadow: 0 18px 40px -24px rgb(0 0 0 / 70%);
+    --c-craft: #7fa6c9;
+    --c-beyond: #c9958a;
+    --c-web: #8fb79a;
+    --c-tools: #b3a3d1;
+    --display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans: "Inter", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f6f4ef; --bg-2: #efece4; --surface: #ffffff; --surface-2: #fbfaf6;
+      --ink: #16212c; --muted: #55616b; --faint: #8a949b;
+      --gold: #9a7428; --gold-strong: #7a5a18; --gold-ink: #ffffff;
+      --line: rgb(22 33 44 / 11%); --line-strong: rgb(154 116 40 / 45%);
+      --shadow: 0 18px 36px -26px rgb(22 33 44 / 40%);
+      --c-craft: #2f6694; --c-beyond: #a1513f; --c-web: #3d7a4e; --c-tools: #6a52a0;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f4ef; --bg-2: #efece4; --surface: #ffffff; --surface-2: #fbfaf6;
+    --ink: #16212c; --muted: #55616b; --faint: #8a949b;
+    --gold: #9a7428; --gold-strong: #7a5a18; --gold-ink: #ffffff;
+    --line: rgb(22 33 44 / 11%); --line-strong: rgb(154 116 40 / 45%);
+    --shadow: 0 18px 36px -26px rgb(22 33 44 / 40%);
+    --c-craft: #2f6694; --c-beyond: #a1513f; --c-web: #3d7a4e; --c-tools: #6a52a0;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    z-index: 10; background: var(--bg);
+  }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  @media (min-width: 720px) {
+    .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
+  }
+
+  /* Masthead */
+  .masthead {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+  .seal {
+    flex: none; width: 40px; height: 40px; display: grid; place-items: center;
+    border: 1px solid var(--line-strong); border-radius: 50%;
+    color: var(--gold); font-family: var(--display); font-size: 22px; font-weight: 600;
+  }
+  .brand-text { min-width: 0; }
+  .brand-name { display: block; font-family: var(--display); font-size: 20px; font-weight: 600; letter-spacing: 0.02em; line-height: 1.1; }
+  .brand-sub { display: block; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .theme-btn {
+    flex: none; display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px;
+    background: transparent; cursor: pointer; font-size: 12.5px; color: var(--muted);
+  }
+  .theme-btn:hover { border-color: var(--line-strong); color: var(--ink); }
+  .theme-btn svg { width: 15px; height: 15px; }
+
+  /* Hero */
+  .hero { padding-block: 56px 36px; display: grid; gap: 32px; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: end; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--gold); }
+  h1 {
+    margin: 14px 0 14px; font-family: var(--display); font-weight: 500;
+    font-size: clamp(40px, 6.4vw, 72px); line-height: 1.02; letter-spacing: -0.015em; text-wrap: balance;
+  }
+  h1 em { font-style: italic; color: var(--gold-strong); }
+  .lede { margin: 0; max-width: 56ch; color: var(--muted); font-size: 16px; }
+
+  .ledger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 6px; background: var(--surface); overflow: hidden; }
+  .ledger div { padding: 16px 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .ledger div:nth-child(2n) { border-right: 0; }
+  .ledger div:nth-last-child(-n+2) { border-bottom: 0; }
+  .ledger b { display: block; font-family: var(--display); font-size: 34px; font-weight: 600; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .ledger span { display: block; margin-top: 6px; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* Controls */
+  .controls {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    padding-block: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; flex: 1 1 520px; min-width: 0; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px;
+    background: transparent; cursor: pointer; font-size: 13px; color: var(--muted);
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--line-strong); }
+  .chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot, var(--gold)); }
+  .chip .n { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--gold-ink); }
+  .chip[aria-pressed="true"] .n { color: var(--gold-ink); opacity: .75; }
+  .chip[aria-pressed="true"] .dot { background: var(--gold-ink); }
+  .tools { display: flex; gap: 8px; flex: 1 1 340px; min-width: 0; }
+  .search {
+    flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px;
+    padding: 0 12px; height: 38px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
+    color: var(--faint);
+  }
+  .search:focus-within { border-color: var(--gold); }
+  .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font: inherit; font-size: 13.5px; }
+  .search input::placeholder { color: var(--faint); }
+  .search kbd { font-family: var(--mono); font-size: 10.5px; padding: 1px 6px; border: 1px solid var(--line); border-radius: 4px; color: var(--faint); }
+  select {
+    height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 6px;
+    background: var(--surface); color: var(--ink); font: inherit; font-size: 13px; cursor: pointer;
+  }
+
+  /* Catalogue */
+  main { padding-block: 8px 72px; }
+  .group { margin-top: 40px; }
+  .group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .group-head h2 { margin: 0; font-family: var(--display); font-weight: 500; font-size: clamp(26px, 3.4vw, 32px); line-height: 1.1; display: flex; align-items: center; gap: 12px; }
+  .group-head h2 i { width: 9px; height: 9px; border-radius: 2px; transform: rotate(45deg); background: var(--accent); }
+  .group-head p { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .group-head .count { font-family: var(--mono); font-size: 12px; color: var(--faint); white-space: nowrap; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; }
+  .card {
+    position: relative; display: flex; flex-direction: column; gap: 12px; min-width: 0;
+    padding: 18px 18px 16px; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--surface); transition: border-color .18s, transform .18s, box-shadow .18s;
+  }
+  .card:hover { border-color: var(--line-strong); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .card-top { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+  .mono {
+    flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 6px;
+    background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent);
+    font-family: var(--display); font-size: 19px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .card h3 { margin: 0; font-family: var(--display); font-size: 21px; font-weight: 600; line-height: 1.15; text-wrap: balance; overflow-wrap: anywhere; }
+  .card .repo { margin-top: 3px; font-family: var(--mono); font-size: 11.5px; color: var(--faint); overflow-wrap: anywhere; }
+  .card .desc { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.55; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+  .tag.private { border-color: color-mix(in srgb, var(--c-beyond) 50%, transparent); color: var(--c-beyond); }
+  .actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    height: 34px; padding: 0 13px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--line); color: var(--ink); background: transparent; transition: background .15s, border-color .15s, color .15s;
+  }
+  .btn svg { width: 14px; height: 14px; }
+  .btn.primary { flex: 1; background: var(--gold); border-color: var(--gold); color: var(--gold-ink); }
+  .btn.primary:hover { filter: brightness(1.07); }
+  .btn.ghost:hover { border-color: var(--line-strong); background: var(--surface-2); }
+
+  .empty { padding: 40px 20px; text-align: center; border: 1px dashed var(--line-strong); border-radius: 8px; color: var(--muted); margin-top: 40px; }
+  .empty b { display: block; font-family: var(--display); font-size: 22px; color: var(--ink); font-weight: 500; margin-bottom: 4px; }
+
+  footer { border-top: 1px solid var(--line); background: var(--bg-2); }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding-block: 22px; font-size: 12.5px; color: var(--muted); }
+  footer .brand-name { font-size: 17px; color: var(--gold-strong); }
+  footer a { color: var(--gold-strong); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-block: 36px 28px; gap: 24px; }
+  }
+  @media (max-width: 520px) {
+    .brand-sub { display: none; }
+    .theme-btn .label { display: none; }
+    .tools { flex-basis: 100%; }
+    .ledger b { font-size: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Grand Master's Portal, αρχή σελίδας">
+      <span class="seal" aria-hidden="true">G</span>
+      <span class="brand-text">
+        <span class="brand-name">Grand Master's Portal</span>
+        <span class="brand-sub">Αποθετήριο έργων</span>
+      </span>
+    </a>
+    <button class="theme-btn" id="theme-toggle" type="button" aria-label="Εναλλαγή θέματος">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <span class="label">Θέμα</span>
+    </button>
+  </div>
+</header>
+
+<div id="top">
+  <section class="wrap hero" aria-labelledby="page-title">
+    <div>
+      <span class="eyebrow">Χαρτοφυλάκιο εργασιών</span>
+      <h1 id="page-title">Όλα τα έργα, <em>σε ένα σημείο.</em></h1>
+      <p class="lede">Εφαρμογές, ιστοσελίδες, αναφορές και εργαλεία για τη Μεγάλη Στοά, τα Τάγματα πέραν του Τεκτονισμού και επαγγελματικούς πελάτες. Κάθε κάρτα ανοίγει τη ζωντανή σελίδα ή τον κώδικα στο GitHub.</p>
+    </div>
+    <div class="ledger" aria-label="Σύνοψη">
+      <div><b id="stat-total">0</b><span>Έργα</span></div>
+      <div><b id="stat-groups">4</b><span>Ενότητες</span></div>
+      <div><b id="stat-accounts">2</b><span>Λογαριασμοί GitHub</span></div>
+      <div><b id="stat-recent">0</b><span>Ενημερώσεις 30 ημερών</span></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="controls">
+      <div class="chips" id="chips" role="group" aria-label="Φίλτρο ενότητας"></div>
+      <div class="tools">
+        <label class="search" for="q">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <input id="q" type="search" placeholder="Αναζήτηση έργου…" autocomplete="off">
+          <kbd>/</kbd>
         </label>
+        <select id="sort" aria-label="Ταξινόμηση">
+          <option value="recent">Πιο πρόσφατα</option>
+          <option value="az">Αλφαβητικά</option>
+        </select>
       </div>
+    </div>
+  </div>
 
-      <section class="category" id="craft" aria-labelledby="craft-heading">
-        <div class="category-heading">
-          <div>
-            <h2 class="category-title" id="craft-heading">Craft</h2>
-            <p class="category-description">Εργαλεία και αναφορές του Τεκτονισμού.</p>
-          </div>
-          <span class="category-count"><span data-category-count="craft">3</span> εργαλεία</span>
+  <main class="wrap" id="catalogue" aria-live="polite"></main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span class="brand-name">Grand Master's Portal</span>
+    <span>Πηγές: <a href="https://github.com/webappngdsib" target="_blank" rel="noopener noreferrer">github.com/webappngdsib</a> · <a href="https://github.com/webappibds" target="_blank" rel="noopener noreferrer">github.com/webappibds</a></span>
+    <span>Τελευταία ενημέρωση καταλόγου: Νοέμβριος 2026</span>
+  </div>
+</footer>
+
+<script>
+  /* ---- Κατάλογος έργων ----
+     Για νέο έργο πρόσθεσε μια γραμμή: repo = "λογαριασμός/όνομα" (προαιρετικό),
+     live = ζωντανός σύνδεσμος (αν λείπει, χρησιμοποιείται το GitHub Pages του repo). */
+  const GROUPS = [
+    { id: "craft",  title: "Μεγάλη Στοά · Craft",      blurb: "Εφαρμογές, φόρμες και αναφορές για τη Μεγάλη Στοά και τις Στοές.", color: "--c-craft" },
+    { id: "beyond", title: "Beyond the Craft",         blurb: "Τάγματα, Παρεκκλήσια, Athelstan και εκδηλώσεις.",                     color: "--c-beyond" },
+    { id: "web",    title: "Επαγγελματικές ιστοσελίδες", blurb: "Ιστοσελίδες για πελάτες και επιχειρήσεις.",                          color: "--c-web" },
+    { id: "tools",  title: "Εργαλεία & Προσωπικά",     blurb: "Διαχειριστικά κέντρα, ευρετήρια και προσωπικά έργα.",                 color: "--c-tools" }
+  ];
+
+  const WORKS = [
+    // Μεγάλη Στοά
+    { g:"craft", t:"Grand Chancellor", d:"Κεντρική εφαρμογή του Μεγάλου Καγκελαρίου.", repo:"webappngdsib/Grand-Chancellor", live:"https://nglg-gsec.github.io/Grand-Chancellor/", u:"2026-10-11", k:"καγκελαριος" },
+    { g:"craft", t:"NGLG Grand Secretary", d:"Εφαρμογή της Μεγάλης Γραμματείας.", repo:"webappngdsib/NGLG-Grand-Secretary", u:"2026-11-15", k:"μεγαλη γραμματεια" },
+    { g:"craft", t:"NGLG Grand Secretary (αρχική έκδοση)", d:"Προηγούμενη έκδοση της εφαρμογής της Μεγάλης Γραμματείας.", repo:"webappibds/NGLG-GRAND-SECRETARY", u:"2026-09-21", k:"μεγαλη γραμματεια" },
+    { g:"craft", t:"Education · Grand Secretary", d:"Εκπαιδευτικό υλικό της Μεγάλης Γραμματείας.", repo:"webappngdsib/EDUCATION-GRANDSECRETARY", u:"2026-11-13", k:"εκπαιδευση" },
+    { g:"craft", t:"NGLG Dress Code", d:"Οδηγός ενδυματολογικού κανονισμού.", repo:"webappngdsib/NGLG-DRESS-CODE", u:"2026-11-16", k:"ενδυμασια κανονισμος" },
+    { g:"craft", t:"Dress & Regalia", d:"Ενδυμασία και διακριτικά (regalia).", repo:"webappibds/dressregalia", u:"2026-11-15", k:"ενδυμασια regalia διακριτικα" },
+    { g:"craft", t:"NGLG Registration Forms", d:"Φόρμες εγγραφής και αιτήσεων.", repo:"webappngdsib/nglg-registration-forms", u:"2026-11-07", k:"φορμες εγγραφη" },
+    { g:"craft", t:"NGLG Αίτηση", d:"Ψηφιακή φόρμα αίτησης.", repo:"webappibds/NGLG-AITHSH", u:"2026-09-22", k:"αιτηση" },
+    { g:"craft", t:"Τεκτονικές Ομιλίες", d:"Συλλογή τεκτονικών ομιλιών.", repo:"webappngdsib/nglg-tektonikes-omilies", u:"2026-10-21", k:"ομιλιες" },
+    { g:"craft", t:"NGLG Recognition", d:"Αναγνωρίσεις της Μεγάλης Στοάς.", repo:"webappibds/nglg-recognition", u:"2026-10-18", k:"αναγνωριση" },
+    { g:"craft", t:"Province of Athens · Lodge Reports", d:"Αναφορές Στοών της Επαρχίας Αθηνών.", repo:"webappibds/Province-Athens-report-for-lodges", u:"2026-11-06", k:"επαρχια αθηνων αναφορα" },
+    { g:"craft", t:"ΣΓΥ Report NGLG", d:"Αναφορά ΣΓΥ.", repo:"webappibds/SGY-report-NGLG-", u:"2026-11-02", k:"σγυ αναφορα" },
+    { g:"craft", t:"Themistocles Lodge", d:"Σελίδα της Στοάς Θεμιστοκλής.", repo:"webappngdsib/NGLG-Themistocles-Lodge-", u:"2026-10-09", k:"θεμιστοκλης στοα" },
+    { g:"craft", t:"Themistocles 96 · Ταμείο", d:"Ταμείο της Στοάς Θεμιστοκλής 96.", repo:"webappibds/THEMISTOCLES96-TAMEIO", u:"2026-10-08", k:"θεμιστοκλης ταμειο οικονομικα" },
+    { g:"craft", t:"NGLG Website", d:"Ιστοσελίδα της Μεγάλης Στοάς.", repo:"webappibds/NGLG-website", u:"2026-09-13", k:"ιστοσελιδα" },
+    { g:"craft", t:"NGLG Library", d:"Ψηφιακή βιβλιοθήκη της NGLGreece.", live:"https://library.nglgreece.org/", k:"βιβλιοθηκη" },
+    { g:"craft", t:"Diavitis Digital Library", d:"Ψηφιακή βιβλιοθήκη Διαβήτης.", repo:"webappngdsib/diavitis-digital-library", u:"2026-09-12", k:"διαβητης βιβλιοθηκη" },
+
+    // Beyond the Craft
+    { g:"beyond", t:"Beyond the Craft Banners", d:"Συλλογή και υλικό για τα banners.", repo:"webappngdsib/BEYOND-THE-CRAFT-BANNERS", u:"2026-11-16", k:"banners σημαιες" },
+    { g:"beyond", t:"Masonic Weekend", d:"Πρόγραμμα και πληροφορίες του Masonic Weekend.", repo:"webappibds/Masonic-weekend", u:"2026-11-14", k:"εκδηλωση σαββατοκυριακο" },
+    { g:"beyond", t:"Pilgrim Preceptors · Constitution", d:"Καταστατικό των Pilgrim Preceptors.", repo:"webappibds/Pilgrim-Preceptors-Constitution", u:"2026-11-11", k:"καταστατικο" },
+    { g:"beyond", t:"Chapel Lux ex Oriente", d:"Commemorative Order of St Thomas of Acon.", repo:"webappibds/Chapel-Lux-ex-Oriente-Commemorative-Order-of-St-Thomas", u:"2026-10-25", k:"παρεκκλησι thomas acon" },
+    { g:"beyond", t:"Chapel Piraeus Budget", d:"Προϋπολογισμός του παρεκκλησίου Thomas of Acon, Πειραιάς.", live:"https://webappngdsib.github.io/Thomas-of-Acon-chapel-Ptolemais/Chap_Piraeus_Budget_021026_v1.html", u:"2026-10-02", k:"προυπολογισμος πειραιας ptolemais" },
+    { g:"beyond", t:"St. Patrick", d:"Εφαρμογή και υλικό για τον Άγιο Πατρίκιο.", repo:"webappngdsib/St-Patrick", u:"2026-10-12", k:"αγιος πατρικιος" },
+    { g:"beyond", t:"Bear & Bell Ritual", d:"Βοηθητικό εργαλείο για το Bear & Bell Ritual.", repo:"webappngdsib/bear-bell-ritual", live:"https://bear-bell-ritual.dskiad.chatgpt.site/", u:"2026-09-17", k:"τελετουργικο" },
+    { g:"beyond", t:"AASR 33° Inspector", d:"Εργαλείο του Επιθεωρητή 33ου βαθμού (Α&ΑΣΤ).", repo:"webappibds/aasr33Inspector", u:"2026-10-01", k:"αρχαιος αποδεκτος σκωτικος 33" },
+    { g:"beyond", t:"Athelstan Grand Court 2026", d:"Grand Court 2026 του Athelstan.", repo:"webappibds/athelstan-grand-court-2026", u:"2026-09-16", k:"athelstan" },
+    { g:"beyond", t:"Athelstan Provincial Calendar", d:"Ημερολόγιο της Επαρχίας Athelstan.", repo:"webappibds/ATHELSTAN-PROV-CALENDAR", u:"2026-09-13", k:"ημερολογιο athelstan" },
+    { g:"beyond", t:"Athelstan · New AGM", d:"Σελίδα της νέας Γενικής Συνέλευσης (AGM).", repo:"webappibds/athelstan-page-newAGM", u:"2026-09-02", k:"γενικη συνελευση athelstan" },
+    { g:"beyond", t:"Athelstan Grand Secretary", d:"Εφαρμογή της Γραμματείας του Athelstan.", repo:"webappibds/ATHELSTAN-GRAND-SECRETARY", u:"2026-09-01", k:"γραμματεια athelstan" },
+
+    // Επαγγελματικά
+    { g:"web", t:"ENT Clinic", d:"Ιστοσελίδα ωτορινολαρυγγολογικής κλινικής.", repo:"webappibds/entclinic-website", u:"2026-10-13", k:"ωρλ κλινικη ιατρειο" },
+    { g:"web", t:"Pamfylos", d:"Επαγγελματική ιστοσελίδα Pamfylos.", repo:"webappibds/pamfylos-website", u:"2026-10-07", k:"παμφυλος" },
+    { g:"web", t:"Fiore Filigrane", d:"Ιστοσελίδα για τη Fiore Filigrane.", repo:"webappibds/Fiore-Filigrane", u:"2026-09-25", k:"κοσμημα φιλιγκραν" },
+    { g:"web", t:"website.fiore.gr", d:"Η ιστοσελίδα fiore.gr.", repo:"webappibds/website.fiore.gr", u:"2026-09-23", k:"fiore" },
+    { g:"web", t:"Varypatades Villa", d:"Ιστοσελίδα της βίλας στους Βαρυπατάδες.", repo:"webappibds/Varypatades-Villa", u:"2026-10-19", k:"βιλα κερκυρα βαρυπαταδες" },
+
+    // Εργαλεία & Προσωπικά
+    { g:"tools", t:"Command Hub", d:"Κεντρικό σημείο εντολών και συντομεύσεων.", repo:"webappibds/command-hub", u:"2026-09-26", k:"κεντρο" },
+    { g:"tools", t:"Repo Index", d:"Ευρετήριο αποθετηρίων.", repo:"webappibds/repo-index", u:"2026-09-17", k:"ευρετηριο" },
+    { g:"tools", t:"Project Admin Hub · Sept 26", d:"Διαχείριση έργων Σεπτεμβρίου 2026.", repo:"webappibds/Sept26-project-admin-hub", u:"2026-09-10", k:"διαχειριση" },
+    { g:"tools", t:"WS Vest", d:"Έργο WS Vest.", repo:"webappibds/wsvest", u:"2026-10-24", k:"wsvest" },
+    { g:"tools", t:"My Travel", d:"Προσωπικός ταξιδιωτικός οδηγός.", repo:"webappibds/My-travel-", u:"2026-11-01", k:"ταξιδι" },
+    { g:"tools", t:"ENT Clinic · Backup", d:"Αντίγραφο ασφαλείας της ιστοσελίδας ENT Clinic.", repo:"webappibds/entclinic-website-backup", u:"2026-09-03", k:"backup αντιγραφο" }
+  ];
+
+  const MONTHS = ["Ιαν","Φεβ","Μαρ","Απρ","Μαΐ","Ιουν","Ιουλ","Αυγ","Σεπ","Οκτ","Νοε","Δεκ"];
+  const fmt = iso => { const d = new Date(iso + "T00:00:00"); return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; };
+  const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLocaleLowerCase("el");
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+  const liveOf = w => w.live || (w.repo ? `https://${w.repo.split("/")[0]}.github.io/${w.repo.split("/")[1]}/` : null);
+  const initials = t => t.replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join("").toUpperCase();
+
+  const ICON_OPEN = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const ICON_CODE = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  const state = { group: "all", q: "", sort: "recent" };
+  try { const s = JSON.parse(localStorage.getItem("gmp-state") || "{}"); if (s.sort) state.sort = s.sort; if (s.group) state.group = s.group; } catch (e) {}
+
+  const $ = s => document.querySelector(s);
+  const chipsEl = $("#chips"), catEl = $("#catalogue"), qEl = $("#q"), sortEl = $("#sort");
+  sortEl.value = state.sort;
+
+  // Stats
+  const NOW = new Date("2026-11-16T12:00:00");
+  $("#stat-total").textContent = WORKS.length;
+  $("#stat-groups").textContent = GROUPS.length;
+  $("#stat-accounts").textContent = new Set(WORKS.filter(w => w.repo).map(w => w.repo.split("/")[0])).size;
+  $("#stat-recent").textContent = WORKS.filter(w => w.u && (NOW - new Date(w.u)) / 864e5 <= 30).length;
+
+  function renderChips() {
+    const items = [{ id: "all", title: "Όλα", color: null }].concat(GROUPS);
+    chipsEl.innerHTML = items.map(g => {
+      const n = g.id === "all" ? WORKS.length : WORKS.filter(w => w.g === g.id).length;
+      const dot = g.color ? `<span class="dot" style="--dot: var(${g.color})"></span>` : "";
+      return `<button type="button" class="chip" data-g="${g.id}" aria-pressed="${state.group === g.id}">${dot}${esc(g.title.split(" · ")[0])}<span class="n">${n}</span></button>`;
+    }).join("");
+  }
+
+  function card(w, accent) {
+    const live = liveOf(w);
+    const repoUrl = w.repo ? `https://github.com/${w.repo}` : null;
+    const owner = w.repo ? w.repo.split("/")[0] : new URL(live).hostname;
+    return `<article class="card" style="--accent: var(${accent})">
+      <div class="card-top">
+        <span class="mono" aria-hidden="true">${esc(initials(w.t))}</span>
+        <div style="min-width:0">
+          <h3>${esc(w.t)}</h3>
+          <div class="repo">${esc(w.repo || owner)}</div>
         </div>
-        <div class="card-grid">
-          <a
-            class="tool-card"
-            href="https://nglg-gsec.github.io/Grand-Chancellor/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="craft"
-            data-search="grand chancellor μεγας καγκελαριος"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M5 19h14M7 16h10M8 13l4-8 4 8M9.5 10h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Grand Chancellor</h3>
-            <p>Κεντρική εφαρμογή του Μεγάλου Καγκελαρίου.</p>
-          </a>
-
-          <a
-            class="tool-card"
-            href="https://webappngdsib.github.io/NGLG-DRESS-CODE/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="craft"
-            data-search="nglg dress code ενδυματολογικος κανονισμος"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="m9 4 3 2 3-2 4 3-2 4-2-1v9H9v-9l-2 1-2-4 4-3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M9 4c0 1.2 1.3 2.2 3 2.2S15 5.2 15 4" stroke="currentColor" stroke-width="1.5"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>NGLG Dress Code</h3>
-            <p>Οδηγός ενδυματολογικού κανονισμού.</p>
-          </a>
-
-          <a
-            class="tool-card"
-            href="https://library.nglgreece.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="craft"
-            data-search="nglgreece library βιβλιοθηκη"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4.5 5.5A2.5 2.5 0 0 1 7 3h12v16H7a2.5 2.5 0 0 0-2.5 2v-15.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                  <path d="M7 3v16M9.5 7H16M9.5 10H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>NGLG Library</h3>
-            <p>Ψηφιακή βιβλιοθήκη της NGLGreece.</p>
-          </a>
-        </div>
-        <p class="empty-state" hidden>Δεν βρέθηκαν εργαλεία σε αυτή την ενότητα.</p>
-      </section>
-
-      <section class="category" id="beyond-the-craft" aria-labelledby="beyond-heading">
-        <div class="category-heading">
-          <div>
-            <h2 class="category-title" id="beyond-heading">Beyond the Craft</h2>
-            <p class="category-description">Πρόσθετα βοηθήματα, εκδηλώσεις και έργα.</p>
-          </div>
-          <span class="category-count"><span data-category-count="beyond">4</span> εργαλεία</span>
-        </div>
-        <div class="card-grid">
-          <a
-            class="tool-card"
-            href="https://bear-bell-ritual.dskiad.chatgpt.site/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="beyond"
-            data-search="bear bell ritual τελετουργικο"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3v18M5 9h14M7 9l-3 6h6L7 9ZM17 9l-3 6h6l-3-6ZM9 21h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Bear &amp; Bell Ritual</h3>
-            <p>Βοηθητικό εργαλείο για το Bear &amp; Bell Ritual.</p>
-          </a>
-
-          <a
-            class="tool-card"
-            href="https://webappngdsib.github.io/BEYOND-THE-CRAFT-BANNERS/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="beyond"
-            data-search="beyond the craft banners banner σημαιες"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M5 21V4m1 1h12l-2.5 3L18 11H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Beyond the Craft Banners</h3>
-            <p>Συλλογή και υλικό για τα banners.</p>
-          </a>
-
-          <a
-            class="tool-card"
-            href="https://webappngdsib.github.io/St-Patrick/"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="beyond"
-            data-search="st patrick saint patrick αγιος πατρικιος"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M12 20s-7-4.2-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.8-7 10-7 10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                  <path d="M12 8v7m-2.5-2.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>St. Patrick</h3>
-            <p>Εφαρμογή και υλικό για τον Άγιο Πατρίκιο.</p>
-          </a>
-
-          <a
-            class="tool-card"
-            href="https://webappngdsib.github.io/Thomas-of-Acon-chapel-Ptolemais/Chap_Piraeus_Budget_021026_v1.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-category="beyond"
-            data-search="thomas of acon chapel ptolemais chap piraeus budget προυπολογισμος πειραιας"
-          >
-            <div class="card-topline">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4 20h16M6 17V8l6-4 6 4v9M9 17v-5h6v5M12 4V2m-2 0h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Chapel Piraeus Budget</h3>
-            <p>Προϋπολογισμός του παρεκκλησίου Thomas of Acon.</p>
-          </a>
-        </div>
-        <p class="empty-state" hidden>Δεν βρέθηκαν εργαλεία σε αυτή την ενότητα.</p>
-      </section>
-
-      <section class="category" id="general" aria-labelledby="general-heading">
-        <div class="category-heading">
-          <div>
-            <h2 class="category-title" id="general-heading">General</h2>
-            <p class="category-description">Γενικά εργαλεία και βοηθήματα.</p>
-          </div>
-          <span class="category-count"><span data-category-count="general">0</span> εργαλεία</span>
-        </div>
-        <p class="empty-state">Δεν έχουν προστεθεί ακόμη εργαλεία σε αυτή την ενότητα.</p>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <p class="footer-brand">Grand Master's Portal</p>
-        <p>Κεντρική πύλη βοηθητικών εργαλείων</p>
       </div>
-    </footer>
+      <p class="desc">${esc(w.d)}</p>
+      <div class="meta">
+        <span class="tag">${esc(owner)}</span>
+        ${w.u ? `<span class="tag">Ενημ. ${fmt(w.u)}</span>` : `<span class="tag">Εξωτερικός σύνδεσμος</span>`}
+      </div>
+      <div class="actions">
+        ${live ? `<a class="btn primary" href="${live}" target="_blank" rel="noopener noreferrer">${ICON_OPEN}Άνοιγμα</a>` : ""}
+        ${repoUrl ? `<a class="btn ghost" href="${repoUrl}" target="_blank" rel="noopener noreferrer" aria-label="Κώδικας του ${esc(w.t)} στο GitHub">${ICON_CODE}Κώδικας</a>` : ""}
+      </div>
+    </article>`;
+  }
 
-    <script>
-      const searchInput = document.querySelector("#tool-search");
-      const cards = [...document.querySelectorAll(".tool-card")];
-      const categories = [...document.querySelectorAll(".category")];
-      const visibleCount = document.querySelector("#visible-count");
+  function render() {
+    const q = norm(state.q.trim());
+    const match = w => !q || norm(`${w.t} ${w.d} ${w.repo || ""} ${w.k || ""}`).includes(q);
+    const sorter = state.sort === "az" ? (a, b) => a.t.localeCompare(b.t, "el") : (a, b) => (b.u || "").localeCompare(a.u || "");
+    let html = "", total = 0;
+    for (const g of GROUPS) {
+      if (state.group !== "all" && state.group !== g.id) continue;
+      const list = WORKS.filter(w => w.g === g.id && match(w)).sort(sorter);
+      if (!list.length) continue;
+      total += list.length;
+      html += `<section class="group" id="${g.id}" style="--accent: var(${g.color})">
+        <div class="group-head">
+          <div><h2><i aria-hidden="true"></i>${esc(g.title)}</h2><p>${esc(g.blurb)}</p></div>
+          <span class="count">${list.length} ${list.length === 1 ? "έργο" : "έργα"}</span>
+        </div>
+        <div class="grid">${list.map(w => card(w, g.color)).join("")}</div>
+      </section>`;
+    }
+    catEl.innerHTML = total ? html : `<div class="empty"><b>Δεν βρέθηκε έργο</b>Δοκίμασε άλλη λέξη ή επίλεξε «Όλα».</div>`;
+    chipsEl.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c.dataset.g === state.group)));
+    try { localStorage.setItem("gmp-state", JSON.stringify({ sort: state.sort, group: state.group })); } catch (e) {}
+  }
 
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim().toLocaleLowerCase("el");
-        let totalVisible = 0;
+  chipsEl.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; state.group = b.dataset.g; render(); });
+  qEl.addEventListener("input", () => { state.q = qEl.value; render(); });
+  sortEl.addEventListener("change", () => { state.sort = sortEl.value; render(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "/" && document.activeElement !== qEl) { e.preventDefault(); qEl.focus(); }
+    if (e.key === "Escape" && document.activeElement === qEl) { qEl.value = ""; state.q = ""; render(); }
+  });
 
-        for (const category of categories) {
-          const categoryCards = category.querySelectorAll(".tool-card");
-          let visibleInCategory = 0;
+  // Θέμα
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("gmp-theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  $("#theme-toggle").addEventListener("click", () => {
+    const current = root.dataset.theme || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    const next = current === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("gmp-theme", next); } catch (e) {}
+  });
 
-          for (const card of categoryCards) {
-            const searchableText = `${card.textContent} ${card.dataset.search}`.toLocaleLowerCase("el");
-            const isVisible = searchableText.includes(query);
-            card.hidden = !isVisible;
-            visibleInCategory += Number(isVisible);
-          }
-
-          const categoryName = category.id === "beyond-the-craft" ? "beyond" : category.id;
-          const count = category.querySelector(`[data-category-count="${categoryName}"]`);
-          if (count) count.textContent = String(visibleInCategory);
-
-          const emptyState = category.querySelector(".empty-state");
-          if (categoryCards.length > 0) {
-            emptyState.hidden = visibleInCategory > 0;
-            category.hidden = query.length > 0 && visibleInCategory === 0;
-          }
-
-          totalVisible += visibleInCategory;
-        }
-
-        visibleCount.textContent = String(totalVisible);
-      });
-
-      visibleCount.textContent = String(cards.length);
-    </script>
-  </body>
+  renderChips();
+  render();
+</script>
+<!--ARTIFACT-END-->
+</body>
 </html>
