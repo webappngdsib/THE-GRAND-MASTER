@@ -7,10 +7,9 @@
 
 [Άνοιγμα του Grand Master's Portal](https://webappngdsib.github.io/THE-GRAND-MASTER/)
 
-Για να δημοσιευτεί η σελίδα, ενεργοποίησε το GitHub Pages από τις ρυθμίσεις του
-repository: **Settings → Pages → Deploy from a branch → `main` → `/(root)`**.
-Το Pages δεν είναι ακόμη ενεργό, οπότε ο παραπάνω σύνδεσμος θα λειτουργήσει μετά
-την ενεργοποίηση και την ολοκλήρωση του πρώτου deployment.
+Η σελίδα δημοσιεύεται αυτόματα μέσω GitHub Pages από το branch `main`
+(`/(root)`). Κάθε αλλαγή στο `main` εμφανίζεται στη ζωντανή σελίδα μέσα σε
+λίγα λεπτά.
 
 ## Τοπική προβολή
 
