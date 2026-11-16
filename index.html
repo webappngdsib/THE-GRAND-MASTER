@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Κεντρικό portal με βοηθητικά εργαλεία και εφαρμογές για τον Μέγα Διδάσκαλο."
+    >
+    <meta name="theme-color" content="#111a24">
+    <title>Grand Master's Portal</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #f2efe7;
+        --muted: #a9b0b4;
+        --gold: #d7b875;
+        --gold-light: #ead8aa;
+        --navy: #111a24;
+        --surface: #192530;
+        --surface-raised: #202e39;
+        --line: rgb(234 216 170 / 15%);
+        --serif: Georgia, "Times New Roman", serif;
+        --sans: "Segoe UI", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        background:
+          radial-gradient(ellipse at 50% -18%, rgb(215 184 117 / 12%), transparent 47rem),
+          var(--navy);
+        color: var(--ink);
+        font-family: var(--sans);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .site-header {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        border-bottom: 1px solid var(--line);
+        background: rgb(17 26 36 / 92%);
+        backdrop-filter: blur(16px);
+      }
+
+      .header-inner,
+      main,
+      .footer-inner {
+        width: min(1120px, calc(100% - 3rem));
+        margin-inline: auto;
+      }
+
+      .header-inner {
+        display: flex;
+        min-height: 76px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 39px;
+        aspect-ratio: 1;
+        place-items: center;
+        border: 1px solid rgb(215 184 117 / 52%);
+        border-radius: 50%;
+        color: var(--gold);
+        font-family: var(--serif);
+        font-size: 1.25rem;
+      }
+
+      .brand-name {
+        font-family: var(--serif);
+        font-size: 1.02rem;
+        letter-spacing: 0.035em;
+      }
+
+      .brand-caption {
+        display: block;
+        color: var(--muted);
+        font-size: 0.63rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(1rem, 3vw, 2.4rem);
+      }
+
+      .main-nav a {
+        color: #d6d8d6;
+        font-size: 0.84rem;
+        text-decoration: none;
+        transition: color 160ms ease;
+      }
+
+      .main-nav a:hover,
+      .main-nav a:focus-visible {
+        color: var(--gold-light);
+      }
+
+      main {
+        padding-block: 4.5rem 5rem;
+      }
+
+      .hero {
+        max-width: 760px;
+        margin: 0 auto 4rem;
+        text-align: center;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        color: var(--gold);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before,
+      .eyebrow::after {
+        width: 28px;
+        height: 1px;
+        background: rgb(215 184 117 / 55%);
+        content: "";
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin: 1rem 0 0.85rem;
+        font-family: var(--serif);
+        font-size: clamp(2.6rem, 7vw, 4.6rem);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.08;
+      }
+
+      h1 span {
+        color: var(--gold-light);
+      }
+
+      .hero-copy {
+        max-width: 570px;
+        margin: 0 auto;
+        color: #b8c0c3;
+        font-size: 1rem;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2.8rem;
+        padding: 1rem 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tool-count {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
+
+      .tool-count strong {
+        color: var(--gold-light);
+        font-weight: 600;
+      }
+
+      .search {
+        display: flex;
+        width: min(300px, 52%);
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.65rem 0.85rem;
+        border: 1px solid rgb(234 216 170 / 19%);
+        border-radius: 4px;
+        background: rgb(25 37 48 / 80%);
+        color: var(--muted);
+      }
+
+      .search:focus-within {
+        border-color: var(--gold);
+        outline: 2px solid rgb(215 184 117 / 18%);
+      }
+
+      .search svg {
+        flex: 0 0 auto;
+      }
+
+      .search input {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--ink);
+        font: inherit;
+        font-size: 0.82rem;
+      }
+
+      .search input::placeholder {
+        color: #899499;
+      }
+
+      .category {
+        margin-top: 3.8rem;
+        scroll-margin-top: 6rem;
+      }
+
+      .category-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.35rem;
+      }
+
+      .category-title {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(1.7rem, 4vw, 2.15rem);
+        font-weight: 400;
+      }
+
+      .category-title::before {
+        width: 3px;
+        height: 1.6rem;
+        background: var(--gold);
+        content: "";
+      }
+
+      .category-description {
+        margin: 0.25rem 0 0 1.15rem;
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
+
+      .category-count {
+        color: var(--muted);
+        font-size: 0.74rem;
+        white-space: nowrap;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .tool-card {
+        display: flex;
+        min-height: 190px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.35rem;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        background: linear-gradient(145deg, rgb(32 46 57 / 94%), rgb(25 37 48 / 94%));
+        text-decoration: none;
+        transition:
+          border-color 180ms ease,
+          transform 180ms ease,
+          background-color 180ms ease;
+      }
+
+      .tool-card:hover,
+      .tool-card:focus-visible {
+        transform: translateY(-3px);
+        border-color: rgb(215 184 117 / 60%);
+        outline: 0;
+        background: var(--surface-raised);
+      }
+
+      .card-topline {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.15rem;
+      }
+
+      .card-icon {
+        display: grid;
+        width: 37px;
+        height: 37px;
+        place-items: center;
+        border: 1px solid rgb(215 184 117 / 27%);
+        border-radius: 4px;
+        color: var(--gold);
+      }
+
+      .card-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .external-icon {
+        color: #909b9f;
+        transition: color 180ms ease, transform 180ms ease;
+      }
+
+      .tool-card:hover .external-icon,
+      .tool-card:focus-visible .external-icon {
+        transform: translate(2px, -2px);
+        color: var(--gold-light);
+      }
+
+      .tool-card h3 {
+        margin-bottom: 0.42rem;
+        font-family: var(--serif);
+        font-size: 1.15rem;
+        font-weight: 400;
+      }
+
+      .tool-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.55;
+      }
+
+      .empty-state {
+        margin: 0;
+        padding: 1.2rem 1.3rem;
+        border: 1px dashed rgb(234 216 170 / 22%);
+        border-radius: 4px;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .empty-state[hidden],
+      .tool-card[hidden],
+      .category[hidden] {
+        display: none;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--line);
+      }
+
+      .footer-inner {
+        display: flex;
+        min-height: 78px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+
+      .footer-inner p {
+        margin: 0;
+      }
+
+      .footer-brand {
+        color: var(--gold-light);
+        font-family: var(--serif);
+        letter-spacing: 0.04em;
+      }
+
+      @media (max-width: 760px) {
+        .card-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .header-inner,
+        main,
+        .footer-inner {
+          width: min(100% - 2rem, 1120px);
+        }
+
+        .header-inner {
+          min-height: 68px;
+          flex-wrap: wrap;
+          gap: 0.55rem 1rem;
+          padding-block: 0.75rem;
+        }
+
+        .brand-name {
+          font-size: 0.92rem;
+        }
+
+        .main-nav {
+          width: 100%;
+          justify-content: space-between;
+          gap: 0.5rem;
+        }
+
+        .main-nav a {
+          font-size: 0.76rem;
+        }
+
+        main {
+          padding-top: 3.4rem;
+        }
+
+        .hero {
+          margin-bottom: 3rem;
+        }
+
+        .toolbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .search {
+          width: 100%;
+        }
+
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tool-card {
+          min-height: 165px;
+        }
+
+        .footer-inner {
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center;
+          padding-block: 1.1rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#top" aria-label="Grand Master's Portal, αρχική σελίδα">
+          <span class="brand-mark" aria-hidden="true">G</span>
+          <span class="brand-name">
+            Grand Master's Portal
+            <span class="brand-caption">Κεντρική πύλη εργαλείων</span>
+          </span>
+        </a>
+        <nav class="main-nav" aria-label="Κεντρικό μενού">
+          <a href="#craft">Craft</a>
+          <a href="#beyond-the-craft">Beyond the Craft</a>
+          <a href="#general">General</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <span class="eyebrow">Εργαλεία &amp; βοηθήματα</span>
+        <h1 id="page-title">Grand Master's <span>Portal</span></h1>
+        <p class="hero-copy">
+          Ένα κεντρικό σημείο πρόσβασης στις εφαρμογές και τα βοηθητικά εργαλεία
+          του Μεγάλου Διδασκάλου.
+        </p>
+      </section>
+
+      <div class="toolbar">
+        <p class="tool-count" aria-live="polite">
+          <strong id="visible-count">7</strong> διαθέσιμα εργαλεία
+        </p>
+        <label class="search">
+          <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/>
+            <path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <input id="tool-search" type="search" placeholder="Αναζήτηση εργαλείων..." autocomplete="off">
+        </label>
+      </div>
+
+      <section class="category" id="craft" aria-labelledby="craft-heading">
+        <div class="category-heading">
+          <div>
+            <h2 class="category-title" id="craft-heading">Craft</h2>
+            <p class="category-description">Εργαλεία και αναφορές του Τεκτονισμού.</p>
+          </div>
+          <span class="category-count"><span data-category-count="craft">3</span> εργαλεία</span>
+        </div>
+        <div class="card-grid">
+          <a
+            class="tool-card"
+            href="https://nglg-gsec.github.io/Grand-Chancellor/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="craft"
+            data-search="grand chancellor μεγας καγκελαριος"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 19h14M7 16h10M8 13l4-8 4 8M9.5 10h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Grand Chancellor</h3>
+            <p>Κεντρική εφαρμογή του Μεγάλου Καγκελαρίου.</p>
+          </a>
+
+          <a
+            class="tool-card"
+            href="https://webappngdsib.github.io/NGLG-DRESS-CODE/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="craft"
+            data-search="nglg dress code ενδυματολογικος κανονισμος"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="m9 4 3 2 3-2 4 3-2 4-2-1v9H9v-9l-2 1-2-4 4-3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9 4c0 1.2 1.3 2.2 3 2.2S15 5.2 15 4" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>NGLG Dress Code</h3>
+            <p>Οδηγός ενδυματολογικού κανονισμού.</p>
+          </a>
+
+          <a
+            class="tool-card"
+            href="https://library.nglgreece.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="craft"
+            data-search="nglgreece library βιβλιοθηκη"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4.5 5.5A2.5 2.5 0 0 1 7 3h12v16H7a2.5 2.5 0 0 0-2.5 2v-15.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M7 3v16M9.5 7H16M9.5 10H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>NGLG Library</h3>
+            <p>Ψηφιακή βιβλιοθήκη της NGLGreece.</p>
+          </a>
+        </div>
+        <p class="empty-state" hidden>Δεν βρέθηκαν εργαλεία σε αυτή την ενότητα.</p>
+      </section>
+
+      <section class="category" id="beyond-the-craft" aria-labelledby="beyond-heading">
+        <div class="category-heading">
+          <div>
+            <h2 class="category-title" id="beyond-heading">Beyond the Craft</h2>
+            <p class="category-description">Πρόσθετα βοηθήματα, εκδηλώσεις και έργα.</p>
+          </div>
+          <span class="category-count"><span data-category-count="beyond">4</span> εργαλεία</span>
+        </div>
+        <div class="card-grid">
+          <a
+            class="tool-card"
+            href="https://bear-bell-ritual.dskiad.chatgpt.site/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="beyond"
+            data-search="bear bell ritual τελετουργικο"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3v18M5 9h14M7 9l-3 6h6L7 9ZM17 9l-3 6h6l-3-6ZM9 21h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Bear &amp; Bell Ritual</h3>
+            <p>Βοηθητικό εργαλείο για το Bear &amp; Bell Ritual.</p>
+          </a>
+
+          <a
+            class="tool-card"
+            href="https://webappngdsib.github.io/BEYOND-THE-CRAFT-BANNERS/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="beyond"
+            data-search="beyond the craft banners banner σημαιες"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 21V4m1 1h12l-2.5 3L18 11H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Beyond the Craft Banners</h3>
+            <p>Συλλογή και υλικό για τα banners.</p>
+          </a>
+
+          <a
+            class="tool-card"
+            href="https://webappngdsib.github.io/St-Patrick/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="beyond"
+            data-search="st patrick saint patrick αγιος πατρικιος"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 20s-7-4.2-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.8-7 10-7 10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M12 8v7m-2.5-2.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>St. Patrick</h3>
+            <p>Εφαρμογή και υλικό για τον Άγιο Πατρίκιο.</p>
+          </a>
+
+          <a
+            class="tool-card"
+            href="https://webappngdsib.github.io/Thomas-of-Acon-chapel-Ptolemais/Chap_Piraeus_Budget_021026_v1.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="beyond"
+            data-search="thomas of acon chapel ptolemais chap piraeus budget προυπολογισμος πειραιας"
+          >
+            <div class="card-topline">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 20h16M6 17V8l6-4 6 4v9M9 17v-5h6v5M12 4V2m-2 0h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <svg class="external-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                <path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Chapel Piraeus Budget</h3>
+            <p>Προϋπολογισμός του παρεκκλησίου Thomas of Acon.</p>
+          </a>
+        </div>
+        <p class="empty-state" hidden>Δεν βρέθηκαν εργαλεία σε αυτή την ενότητα.</p>
+      </section>
+
+      <section class="category" id="general" aria-labelledby="general-heading">
+        <div class="category-heading">
+          <div>
+            <h2 class="category-title" id="general-heading">General</h2>
+            <p class="category-description">Γενικά εργαλεία και βοηθήματα.</p>
+          </div>
+          <span class="category-count"><span data-category-count="general">0</span> εργαλεία</span>
+        </div>
+        <p class="empty-state">Δεν έχουν προστεθεί ακόμη εργαλεία σε αυτή την ενότητα.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">Grand Master's Portal</p>
+        <p>Κεντρική πύλη βοηθητικών εργαλείων</p>
+      </div>
+    </footer>
+
+    <script>
+      const searchInput = document.querySelector("#tool-search");
+      const cards = [...document.querySelectorAll(".tool-card")];
+      const categories = [...document.querySelectorAll(".category")];
+      const visibleCount = document.querySelector("#visible-count");
+
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.trim().toLocaleLowerCase("el");
+        let totalVisible = 0;
+
+        for (const category of categories) {
+          const categoryCards = category.querySelectorAll(".tool-card");
+          let visibleInCategory = 0;
+
+          for (const card of categoryCards) {
+            const searchableText = `${card.textContent} ${card.dataset.search}`.toLocaleLowerCase("el");
+            const isVisible = searchableText.includes(query);
+            card.hidden = !isVisible;
+            visibleInCategory += Number(isVisible);
+          }
+
+          const categoryName = category.id === "beyond-the-craft" ? "beyond" : category.id;
+          const count = category.querySelector(`[data-category-count="${categoryName}"]`);
+          if (count) count.textContent = String(visibleInCategory);
+
+          const emptyState = category.querySelector(".empty-state");
+          if (categoryCards.length > 0) {
+            emptyState.hidden = visibleInCategory > 0;
+            category.hidden = query.length > 0 && visibleInCategory === 0;
+          }
+
+          totalVisible += visibleInCategory;
+        }
+
+        visibleCount.textContent = String(totalVisible);
+      });
+
+      visibleCount.textContent = String(cards.length);
+    </script>
+  </body>
+</html>
