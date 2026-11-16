@@ -189,6 +189,7 @@
   .card .desc { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.55; flex: 1; }
   .meta { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+  .tag.num { font-family: var(--mono); color: var(--ink); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
   .tag.private { border-color: color-mix(in srgb, var(--c-beyond) 50%, transparent); color: var(--c-beyond); }
   .actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
   .btn {
@@ -303,7 +304,6 @@
     { g:"craft", t:"NGLG Grand Secretary (αρχική έκδοση)", d:"Προηγούμενη έκδοση της εφαρμογής της Μεγάλης Γραμματείας.", repo:"webappibds/NGLG-GRAND-SECRETARY", u:"2026-09-21", k:"μεγαλη γραμματεια" },
     { g:"craft", t:"Education · Grand Secretary", d:"Εκπαιδευτικό υλικό της Μεγάλης Γραμματείας.", repo:"webappngdsib/EDUCATION-GRANDSECRETARY", u:"2026-11-13", k:"εκπαιδευση" },
     { g:"craft", t:"NGLG Dress Code", d:"Οδηγός ενδυματολογικού κανονισμού.", repo:"webappngdsib/NGLG-DRESS-CODE", u:"2026-11-16", k:"ενδυμασια κανονισμος" },
-    { g:"craft", t:"Dress & Regalia", d:"Ενδυμασία και διακριτικά (regalia).", repo:"webappibds/dressregalia", u:"2026-11-15", k:"ενδυμασια regalia διακριτικα" },
     { g:"craft", t:"NGLG Registration Forms", d:"Φόρμες εγγραφής και αιτήσεων.", repo:"webappngdsib/nglg-registration-forms", u:"2026-11-07", k:"φορμες εγγραφη" },
     { g:"craft", t:"NGLG Αίτηση", d:"Ψηφιακή φόρμα αίτησης.", repo:"webappibds/NGLG-AITHSH", u:"2026-09-22", k:"αιτηση" },
     { g:"craft", t:"Τεκτονικές Ομιλίες", d:"Συλλογή τεκτονικών ομιλιών.", repo:"webappngdsib/nglg-tektonikes-omilies", u:"2026-10-21", k:"ομιλιες" },
@@ -351,6 +351,7 @@
   const fmt = iso => { const d = new Date(iso + "T00:00:00"); return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; };
   const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLocaleLowerCase("el");
   const esc = s => s.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+  WORKS.forEach((w, i) => { w.n = String(i + 1).padStart(2, "0"); });
   const liveOf = w => w.live || (w.repo ? `https://${w.repo.split("/")[0]}.github.io/${w.repo.split("/")[1]}/` : null);
   const initials = t => t.replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join("").toUpperCase();
 
@@ -394,6 +395,7 @@
       </div>
       <p class="desc">${esc(w.d)}</p>
       <div class="meta">
+        <span class="tag num">Nº ${w.n}</span>
         <span class="tag">${esc(owner)}</span>
         ${w.u ? `<span class="tag">Ενημ. ${fmt(w.u)}</span>` : `<span class="tag">Εξωτερικός σύνδεσμος</span>`}
       </div>
@@ -406,7 +408,7 @@
 
   function render() {
     const q = norm(state.q.trim());
-    const match = w => !q || norm(`${w.t} ${w.d} ${w.repo || ""} ${w.k || ""}`).includes(q);
+    const match = w => !q || norm(`${w.n} ${w.t} ${w.d} ${w.repo || ""} ${w.k || ""}`).includes(q);
     const sorter = state.sort === "az" ? (a, b) => a.t.localeCompare(b.t, "el") : (a, b) => (b.u || "").localeCompare(a.u || "");
     let html = "", total = 0;
     for (const g of GROUPS) {
