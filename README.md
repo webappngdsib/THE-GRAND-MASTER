@@ -3,10 +3,19 @@
 Κεντρικό portal με συνδέσμους προς τις εφαρμογές και τα βοηθητικά εργαλεία του
 Μεγάλου Διδασκάλου.
 
-## Προβολή
+## Ζωντανή σελίδα
+
+[Άνοιγμα του Grand Master's Portal](https://webappngdsib.github.io/THE-GRAND-MASTER/)
+
+Για να δημοσιευτεί η σελίδα, ενεργοποίησε το GitHub Pages από τις ρυθμίσεις του
+repository: **Settings → Pages → Deploy from a branch → `main` → `/(root)`**.
+Το Pages δεν είναι ακόμη ενεργό, οπότε ο παραπάνω σύνδεσμος θα λειτουργήσει μετά
+την ενεργοποίηση και την ολοκλήρωση του πρώτου deployment.
+
+## Τοπική προβολή
 
 Άνοιξε το `index.html` σε browser ή δημοσίευσε το repository ως στατικό site
-(για παράδειγμα μέσω GitHub Pages). Δεν απαιτούνται build steps ή dependencies.
+ως στατικό site. Δεν απαιτούνται build steps ή dependencies.
 
 ## Ενημέρωση εργαλείων
 
