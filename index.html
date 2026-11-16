@@ -178,6 +178,19 @@
     background: var(--surface); transition: border-color .18s, transform .18s, box-shadow .18s;
   }
   .card:hover { border-color: var(--line-strong); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .preview {
+    position: relative; display: block; margin: -18px -18px 2px; aspect-ratio: 16 / 10; overflow: hidden;
+    border-radius: 8px 8px 0 0; border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  }
+  .preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .3s; }
+  .card:hover .preview img { transform: scale(1.03); }
+  .preview span { display: none; }
+  .preview.none { display: grid; place-items: center; }
+  .preview.none span {
+    display: block; font-family: var(--display); font-size: 40px; font-weight: 600;
+    color: color-mix(in srgb, var(--accent) 55%, transparent); letter-spacing: .04em;
+  }
   .card-top { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
   .mono {
     flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 6px;
@@ -301,20 +314,14 @@
     // Μεγάλη Στοά
     { g:"craft", t:"Grand Chancellor", d:"Κεντρική εφαρμογή του Μεγάλου Καγκελαρίου.", repo:"webappngdsib/Grand-Chancellor", live:"https://webappngdsib.github.io/Grand-Chancellor/", u:"2026-10-11", k:"καγκελαριος" },
     { g:"craft", t:"NGLG Grand Secretary", d:"Εφαρμογή της Μεγάλης Γραμματείας.", repo:"webappngdsib/NGLG-Grand-Secretary", u:"2026-11-15", k:"μεγαλη γραμματεια" },
-    { g:"craft", t:"NGLG Grand Secretary (αρχική έκδοση)", d:"Προηγούμενη έκδοση της εφαρμογής της Μεγάλης Γραμματείας.", repo:"webappibds/NGLG-GRAND-SECRETARY", u:"2026-09-21", k:"μεγαλη γραμματεια" },
     { g:"craft", t:"Education · Grand Secretary", d:"Εκπαιδευτικό υλικό της Μεγάλης Γραμματείας.", repo:"webappngdsib/EDUCATION-GRANDSECRETARY", u:"2026-11-13", k:"εκπαιδευση" },
     { g:"craft", t:"NGLG Dress Code", d:"Οδηγός ενδυματολογικού κανονισμού.", repo:"webappngdsib/NGLG-DRESS-CODE", u:"2026-11-16", k:"ενδυμασια κανονισμος" },
     { g:"craft", t:"NGLG Registration Forms", d:"Φόρμες εγγραφής και αιτήσεων.", repo:"webappngdsib/nglg-registration-forms", u:"2026-11-07", k:"φορμες εγγραφη" },
-    { g:"craft", t:"NGLG Αίτηση", d:"Ψηφιακή φόρμα αίτησης.", repo:"webappibds/NGLG-AITHSH", u:"2026-09-22", k:"αιτηση" },
+    { g:"craft", t:"NGLG Αίτηση Εισδοχής", d:"Ψηφιακή φόρμα αίτησης εισδοχής.", repo:"webappibds/NGLG-AITHSH", u:"2026-09-22", k:"αιτηση εισδοχη eisdoxhs" },
     { g:"craft", t:"Τεκτονικές Ομιλίες", d:"Συλλογή τεκτονικών ομιλιών.", repo:"webappngdsib/nglg-tektonikes-omilies", u:"2026-10-21", k:"ομιλιες" },
-    { g:"craft", t:"NGLG Recognition", d:"Αναγνωρίσεις της Μεγάλης Στοάς.", repo:"webappibds/nglg-recognition", u:"2026-10-18", k:"αναγνωριση" },
-    { g:"craft", t:"Province of Athens · Lodge Reports", d:"Αναφορές Στοών της Επαρχίας Αθηνών.", repo:"webappibds/Province-Athens-report-for-lodges", u:"2026-11-06", k:"επαρχια αθηνων αναφορα" },
+    { g:"craft", t:"Province of Athens · Lodge Reports", d:"Αναφορές Στοών της Επαρχίας Αθηνών. Κωδικός πρόσβασης: 1313.", repo:"webappibds/Province-Athens-report-for-lodges", u:"2026-11-06", k:"επαρχια αθηνων αναφορα" },
     { g:"craft", t:"ΣΓΥ Report NGLG", d:"Αναφορά ΣΓΥ.", repo:"webappibds/SGY-report-NGLG-", u:"2026-11-02", k:"σγυ αναφορα" },
-    { g:"craft", t:"Themistocles Lodge", d:"Σελίδα της Στοάς Θεμιστοκλής.", repo:"webappngdsib/NGLG-Themistocles-Lodge-", u:"2026-10-09", k:"θεμιστοκλης στοα" },
-    { g:"craft", t:"Themistocles 96 · Ταμείο", d:"Ταμείο της Στοάς Θεμιστοκλής 96.", repo:"webappibds/THEMISTOCLES96-TAMEIO", u:"2026-10-08", k:"θεμιστοκλης ταμειο οικονομικα" },
-    { g:"craft", t:"NGLG Website", d:"Ιστοσελίδα της Μεγάλης Στοάς.", repo:"webappibds/NGLG-website", u:"2026-09-13", k:"ιστοσελιδα" },
     { g:"craft", t:"Amity Planet", d:"Amity Planet της Εθνικής Μεγάλης Στοάς της Ελλάδος.", live:"https://nglg-amity-planet.pages.dev/", k:"amity planet φιλια nglg" },
-    { g:"craft", t:"NGLG Library", d:"Ψηφιακή βιβλιοθήκη της NGLGreece.", live:"https://library.nglgreece.org/", k:"βιβλιοθηκη" },
     { g:"craft", t:"Diavitis Digital Library", d:"Ψηφιακή βιβλιοθήκη Διαβήτης.", repo:"webappngdsib/diavitis-digital-library", u:"2026-09-12", k:"διαβητης βιβλιοθηκη" },
 
     // Beyond the Craft
@@ -353,6 +360,12 @@
   const esc = s => s.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
   WORKS.forEach((w, i) => { w.n = String(i + 1).padStart(2, "0"); });
   const liveOf = w => w.live || (w.repo ? `https://${w.repo.split("/")[0]}.github.io/${w.repo.split("/")[1]}/` : null);
+  const slugOf = w => {
+    const u = new URL(liveOf(w));
+    const last = u.pathname.split("/").filter(Boolean).pop();
+    const base = w.repo ? w.repo.replace("/", "-") : (last ? last.replace(/\.[a-z]+$/i, "") : u.hostname.split(".")[0]);
+    return base.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  };
   const initials = t => t.replace(/[^\p{L}\p{N} ]/gu, " ").split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join("").toUpperCase();
 
   const ICON_OPEN = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -385,7 +398,11 @@
     const live = liveOf(w);
     const repoUrl = w.repo ? `https://github.com/${w.repo}` : null;
     const owner = w.repo ? w.repo.split("/")[0] : new URL(live).hostname;
+    const preview = live
+      ? `<a class="preview" href="${live}" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="previews/${slugOf(w)}.jpg" alt="" loading="lazy" decoding="async" width="640" height="400" onerror="this.parentNode.classList.add('none');this.remove()"><span>${esc(initials(w.t))}</span></a>`
+      : `<div class="preview none" aria-hidden="true"><span>${esc(initials(w.t))}</span></div>`;
     return `<article class="card" style="--accent: var(${accent})">
+      ${preview}
       <div class="card-top">
         <span class="mono" aria-hidden="true">${esc(initials(w.t))}</span>
         <div style="min-width:0">
